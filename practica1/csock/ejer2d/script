@@ -1,0 +1,8 @@
+#!/bin/bash
+port=9600
+	for i in `seq 1 50`;
+do
+	./ser $port
+	((port=port+1))
+done
+	

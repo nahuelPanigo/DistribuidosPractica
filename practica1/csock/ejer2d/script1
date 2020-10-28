@@ -1,0 +1,9 @@
+#!/bin/bash
+port=9600
+	for i in `seq 1 50`;
+do
+	./cli 127.0.0.1 $port >> ./nuevo
+	((port=port+1))
+	sleep 1
+done
+	
