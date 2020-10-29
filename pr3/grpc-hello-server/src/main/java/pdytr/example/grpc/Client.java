@@ -21,15 +21,13 @@ public class Client
       // Here we create a blocking stub, but an async stub,
       // or an async stub with Future are always possible.
       GreetingServiceGrpc.GreetingServiceBlockingStub stub = GreetingServiceGrpc.newBlockingStub(channel);
-      GreetingServiceOuterClass.HelloRequest request = GreetingServiceOuterClass.HelloRequest.newBuilder().setName("Ray").build();
-
+      GreetingServiceOuterClass.User request = GreetingServiceOuterClass.User.newBuilder().setUsername("nahuel").setPassword("123").build();
       System.out.println(request);
       // Finally, make the call using the stub
-      GreetingServiceOuterClass.HelloResponse response = 
+      GreetingServiceOuterClass.Response response = 
         stub.greeting(request);
 
       System.out.println(response);
-
       // A Channel should be shutdown before stopping the process.
       channel.shutdownNow();
     }
