@@ -18,14 +18,30 @@ message HelloRequest {
   // for more information.
 }
 
+message User {
+  string username = 1;
+  string password = 2;
+}
+
+message Response{
+  string mensaje = 1 ;
+}
+
+
 message HelloResponse {
   string greeting = 1;
 }
 
-// Defining a Service, a Service can have multiple RPC operations
+/*
+ Defining a Service, a Service can have multiple RPC operations
 service GreetingService {
-  // Define a RPC operation
-   //rpc greeting(HelloRequest) returns (stream HelloResponse);
-   // usa un rpc q es que le llega un request y responde con un response
+   Define a RPC operation
+   rpc greeting(HelloRequest) returns (stream HelloResponse);
+    usa un rpc q es que le llega un request y responde con un response
    rpc greeting(HelloRequest) returns (HelloResponse);
+}
+*/
+
+service GreetingService {
+   rpc greeting(User) returns (Response);
 }
