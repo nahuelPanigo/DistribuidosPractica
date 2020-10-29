@@ -32,16 +32,16 @@ public final class GreetingServiceGrpc {
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest,
-      pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse> METHOD_GREETING =
+      pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse> METHOD_PRUEBA =
       io.grpc.MethodDescriptor.<pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest, pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
-              "pdytr.example.grpc.GreetingService", "greeting"))
+              "pdytr.example.grpc.GreetingService", "prueba"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
               pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse.getDefaultInstance()))
-          .setSchemaDescriptor(new GreetingServiceMethodDescriptorSupplier("greeting"))
+          .setSchemaDescriptor(new GreetingServiceMethodDescriptorSupplier("prueba"))
           .build();
 
   /**
@@ -79,22 +79,23 @@ public final class GreetingServiceGrpc {
      * Define a RPC operation
      *rpc greeting(HelloRequest) returns (stream HelloResponse);
      * usa un rpc q es que le llega un request y responde con un response
+     *rpc greeting(HelloRequest) returns (HelloResponse);
      * </pre>
      */
-    public void greeting(pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request,
+    public void prueba(pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request,
         io.grpc.stub.StreamObserver<pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(METHOD_GREETING, responseObserver);
+      asyncUnimplementedUnaryCall(METHOD_PRUEBA, responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            METHOD_GREETING,
+            METHOD_PRUEBA,
             asyncUnaryCall(
               new MethodHandlers<
                 pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest,
                 pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse>(
-                  this, METHODID_GREETING)))
+                  this, METHODID_PRUEBA)))
           .build();
     }
   }
@@ -125,12 +126,13 @@ public final class GreetingServiceGrpc {
      * Define a RPC operation
      *rpc greeting(HelloRequest) returns (stream HelloResponse);
      * usa un rpc q es que le llega un request y responde con un response
+     *rpc greeting(HelloRequest) returns (HelloResponse);
      * </pre>
      */
-    public void greeting(pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request,
+    public void prueba(pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request,
         io.grpc.stub.StreamObserver<pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(METHOD_GREETING, getCallOptions()), request, responseObserver);
+          getChannel().newCall(METHOD_PRUEBA, getCallOptions()), request, responseObserver);
     }
   }
 
@@ -160,11 +162,12 @@ public final class GreetingServiceGrpc {
      * Define a RPC operation
      *rpc greeting(HelloRequest) returns (stream HelloResponse);
      * usa un rpc q es que le llega un request y responde con un response
+     *rpc greeting(HelloRequest) returns (HelloResponse);
      * </pre>
      */
-    public pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse greeting(pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request) {
+    public pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse prueba(pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request) {
       return blockingUnaryCall(
-          getChannel(), METHOD_GREETING, getCallOptions(), request);
+          getChannel(), METHOD_PRUEBA, getCallOptions(), request);
     }
   }
 
@@ -194,16 +197,17 @@ public final class GreetingServiceGrpc {
      * Define a RPC operation
      *rpc greeting(HelloRequest) returns (stream HelloResponse);
      * usa un rpc q es que le llega un request y responde con un response
+     *rpc greeting(HelloRequest) returns (HelloResponse);
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse> greeting(
+    public com.google.common.util.concurrent.ListenableFuture<pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse> prueba(
         pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request) {
       return futureUnaryCall(
-          getChannel().newCall(METHOD_GREETING, getCallOptions()), request);
+          getChannel().newCall(METHOD_PRUEBA, getCallOptions()), request);
     }
   }
 
-  private static final int METHODID_GREETING = 0;
+  private static final int METHODID_PRUEBA = 0;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -222,8 +226,8 @@ public final class GreetingServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_GREETING:
-          serviceImpl.greeting((pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest) request,
+        case METHODID_PRUEBA:
+          serviceImpl.prueba((pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest) request,
               (io.grpc.stub.StreamObserver<pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse>) responseObserver);
           break;
         default:
@@ -287,7 +291,7 @@ public final class GreetingServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new GreetingServiceFileDescriptorSupplier())
-              .addMethod(METHOD_GREETING)
+              .addMethod(METHOD_PRUEBA)
               .build();
         }
       }
