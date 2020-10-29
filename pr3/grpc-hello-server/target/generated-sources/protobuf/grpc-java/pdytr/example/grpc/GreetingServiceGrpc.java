@@ -16,9 +16,6 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 
 /**
- * <pre>
- * Defining a Service, a Service can have multiple RPC operations
- * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.7.0)",
@@ -31,16 +28,16 @@ public final class GreetingServiceGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest,
-      pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse> METHOD_GREETING =
-      io.grpc.MethodDescriptor.<pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest, pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse>newBuilder()
+  public static final io.grpc.MethodDescriptor<pdytr.example.grpc.GreetingServiceOuterClass.User,
+      pdytr.example.grpc.GreetingServiceOuterClass.Response> METHOD_GREETING =
+      io.grpc.MethodDescriptor.<pdytr.example.grpc.GreetingServiceOuterClass.User, pdytr.example.grpc.GreetingServiceOuterClass.Response>newBuilder()
           .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
           .setFullMethodName(generateFullMethodName(
               "pdytr.example.grpc.GreetingService", "greeting"))
           .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest.getDefaultInstance()))
+              pdytr.example.grpc.GreetingServiceOuterClass.User.getDefaultInstance()))
           .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-              pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse.getDefaultInstance()))
+              pdytr.example.grpc.GreetingServiceOuterClass.Response.getDefaultInstance()))
           .setSchemaDescriptor(new GreetingServiceMethodDescriptorSupplier("greeting"))
           .build();
 
@@ -68,21 +65,13 @@ public final class GreetingServiceGrpc {
   }
 
   /**
-   * <pre>
-   * Defining a Service, a Service can have multiple RPC operations
-   * </pre>
    */
   public static abstract class GreetingServiceImplBase implements io.grpc.BindableService {
 
     /**
-     * <pre>
-     * Define a RPC operation
-     *rpc greeting(HelloRequest) returns (stream HelloResponse);
-     * usa un rpc q es que le llega un request y responde con un response
-     * </pre>
      */
-    public void greeting(pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request,
-        io.grpc.stub.StreamObserver<pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse> responseObserver) {
+    public void greeting(pdytr.example.grpc.GreetingServiceOuterClass.User request,
+        io.grpc.stub.StreamObserver<pdytr.example.grpc.GreetingServiceOuterClass.Response> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_GREETING, responseObserver);
     }
 
@@ -92,17 +81,14 @@ public final class GreetingServiceGrpc {
             METHOD_GREETING,
             asyncUnaryCall(
               new MethodHandlers<
-                pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest,
-                pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse>(
+                pdytr.example.grpc.GreetingServiceOuterClass.User,
+                pdytr.example.grpc.GreetingServiceOuterClass.Response>(
                   this, METHODID_GREETING)))
           .build();
     }
   }
 
   /**
-   * <pre>
-   * Defining a Service, a Service can have multiple RPC operations
-   * </pre>
    */
   public static final class GreetingServiceStub extends io.grpc.stub.AbstractStub<GreetingServiceStub> {
     private GreetingServiceStub(io.grpc.Channel channel) {
@@ -121,23 +107,15 @@ public final class GreetingServiceGrpc {
     }
 
     /**
-     * <pre>
-     * Define a RPC operation
-     *rpc greeting(HelloRequest) returns (stream HelloResponse);
-     * usa un rpc q es que le llega un request y responde con un response
-     * </pre>
      */
-    public void greeting(pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request,
-        io.grpc.stub.StreamObserver<pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse> responseObserver) {
+    public void greeting(pdytr.example.grpc.GreetingServiceOuterClass.User request,
+        io.grpc.stub.StreamObserver<pdytr.example.grpc.GreetingServiceOuterClass.Response> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_GREETING, getCallOptions()), request, responseObserver);
     }
   }
 
   /**
-   * <pre>
-   * Defining a Service, a Service can have multiple RPC operations
-   * </pre>
    */
   public static final class GreetingServiceBlockingStub extends io.grpc.stub.AbstractStub<GreetingServiceBlockingStub> {
     private GreetingServiceBlockingStub(io.grpc.Channel channel) {
@@ -156,22 +134,14 @@ public final class GreetingServiceGrpc {
     }
 
     /**
-     * <pre>
-     * Define a RPC operation
-     *rpc greeting(HelloRequest) returns (stream HelloResponse);
-     * usa un rpc q es que le llega un request y responde con un response
-     * </pre>
      */
-    public pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse greeting(pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request) {
+    public pdytr.example.grpc.GreetingServiceOuterClass.Response greeting(pdytr.example.grpc.GreetingServiceOuterClass.User request) {
       return blockingUnaryCall(
           getChannel(), METHOD_GREETING, getCallOptions(), request);
     }
   }
 
   /**
-   * <pre>
-   * Defining a Service, a Service can have multiple RPC operations
-   * </pre>
    */
   public static final class GreetingServiceFutureStub extends io.grpc.stub.AbstractStub<GreetingServiceFutureStub> {
     private GreetingServiceFutureStub(io.grpc.Channel channel) {
@@ -190,14 +160,9 @@ public final class GreetingServiceGrpc {
     }
 
     /**
-     * <pre>
-     * Define a RPC operation
-     *rpc greeting(HelloRequest) returns (stream HelloResponse);
-     * usa un rpc q es que le llega un request y responde con un response
-     * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse> greeting(
-        pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<pdytr.example.grpc.GreetingServiceOuterClass.Response> greeting(
+        pdytr.example.grpc.GreetingServiceOuterClass.User request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_GREETING, getCallOptions()), request);
     }
@@ -223,8 +188,8 @@ public final class GreetingServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_GREETING:
-          serviceImpl.greeting((pdytr.example.grpc.GreetingServiceOuterClass.HelloRequest) request,
-              (io.grpc.stub.StreamObserver<pdytr.example.grpc.GreetingServiceOuterClass.HelloResponse>) responseObserver);
+          serviceImpl.greeting((pdytr.example.grpc.GreetingServiceOuterClass.User) request,
+              (io.grpc.stub.StreamObserver<pdytr.example.grpc.GreetingServiceOuterClass.Response>) responseObserver);
           break;
         default:
           throw new AssertionError();
