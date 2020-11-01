@@ -7,7 +7,11 @@ import java.util.concurrent.TimeUnit;
 import java.io.File;
 import java.io.FileOutputStream;
 
+<<<<<<< HEAD:grpc/client5b.java
 public class Client5b
+=======
+public class Client5a
+>>>>>>> master:pr3/ejer5/5a/grpc-hello-server/src/main/java/pdytr/example/grpc/Client5a.java
 {
 
     public void setTimeInTxt(float timeCommSeg){
