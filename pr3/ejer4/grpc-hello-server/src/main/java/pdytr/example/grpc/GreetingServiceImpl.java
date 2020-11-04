@@ -9,7 +9,7 @@ import com.google.protobuf.ByteString;
  
 public class GreetingServiceImpl extends GreetingServiceGrpc.GreetingServiceImplBase {
 
-public int lastPos(int posA, int posB) {
+private int lastPos(int posA, int posB) {
   if (posA < posB){
     return posA;
     }
@@ -17,7 +17,7 @@ public int lastPos(int posA, int posB) {
 
 }
 
-public byte[] leer (String name, int pos, int cantData){
+private byte[] leer (String name, int pos, int cantData){
     File archivo = new File (name);
     byte[] fileArray = new byte[(int) archivo.length()];
     int last= this.lastPos(fileArray.length, pos + cantData);
@@ -41,11 +41,11 @@ public byte[] leer (String name, int pos, int cantData){
     return fileArray2;
 }
 
-public int escribir (String name, int cant, byte [] buf){
+private int escribir (String name, int cant, byte [] buf){
      try{
       File archivo = new File (name);
       archivo.createNewFile();
-      FileOutputStream fileOuputStream = new FileOutputStream(archivo);
+      FileOutputStream fileOuputStream = new FileOutputStream(archivo,true);
       fileOuputStream.write(buf);
       fileOuputStream.close();
     } catch (Exception e) {
@@ -76,6 +76,7 @@ public int escribir (String name, int cant, byte [] buf){
           try{ 
               int cantE = this.escribir(request.getName(),request.getCant(),request.getBuf().toByteArray());
               GreetingServiceOuterClass.DevolverEscribir response = GreetingServiceOuterClass.DevolverEscribir.newBuilder().setCant(cantE).build();
+              //Thread.sleep(10000);
               responseObserver.onNext(response);
               responseObserver.onCompleted();
           } catch (Exception e){

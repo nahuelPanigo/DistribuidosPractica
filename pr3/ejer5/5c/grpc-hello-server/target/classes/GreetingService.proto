@@ -1,0 +1,16 @@
+syntax = "proto3";
+package pdytr.example.grpc;
+
+
+message Time{
+  int32 time = 1;
+}
+
+message Response{
+  string mensaje = 1 ;
+}
+
+
+service GreetingService {
+ rpc greeting(Time) returns (Response);
+}
