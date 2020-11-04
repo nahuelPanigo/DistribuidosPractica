@@ -22,16 +22,17 @@ public class Client
       Scanner teclado = new Scanner(System.in);
       System.out.println("ingrese nombre del archivo que desea leer o escribir");
       String nombre = teclado. nextLine();
+        System.out.println("ingreselo que quiere escribir");
+      String texto = teclado. nextLine();
       System.out.println("Ingrese opcion 1 (escribir) opcion 2 (leer)");
       int op = teclado. nextInt();
       if ( op == 1) {
-         
-          byte[] bytes = " Texto que se agrega al final si existe el archivo".getBytes();
+          byte[] bytes = texto.getBytes();
           int cant = bytes.length;
           ByteString buf = ByteString.copyFrom(bytes);
           GreetingServiceOuterClass.Escribir request = GreetingServiceOuterClass.Escribir.newBuilder().setName(nombre).setBuf(buf).setCant(cant).build();
           GreetingServiceOuterClass.DevolverEscribir response = stub.write(request);
-          System.out.println("la cantidad de bytes que se escribio fue: "+ response);
+          System.out.println("la cantidad de bytes que se escribio fue: "+ response.getCant());
       }else {
           
           System.out.println("ingrese la posicion desde donde desea leer");
