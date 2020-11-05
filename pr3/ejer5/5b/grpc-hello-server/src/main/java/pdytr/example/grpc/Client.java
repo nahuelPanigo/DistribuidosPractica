@@ -18,8 +18,7 @@ public class Client
         .usePlaintext(true)
         .build();
 
-      double prom =4025.83333;
-      double prom =50000;
+      double prom =40000;
       int arg = Integer. parseInt(args[1]);
       double lineMs =prom-(prom*arg*0.1);
       int deadlineMs = (int)lineMs;
