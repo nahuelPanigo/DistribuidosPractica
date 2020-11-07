@@ -18,12 +18,12 @@ public class Client
         .usePlaintext(true)
         .build();
 
-      double prom =40000;
+      double prom =5000;
       int arg = Integer. parseInt(args[1]);
       double lineMs =prom-(prom*arg*0.1);
       int deadlineMs = (int)lineMs;
       GreetingServiceGrpc.GreetingServiceBlockingStub stub = GreetingServiceGrpc.newBlockingStub(channel);
-      GreetingServiceOuterClass.Time request = GreetingServiceOuterClass.Time.newBuilder().setTime(500).build();
+      GreetingServiceOuterClass.Time request = GreetingServiceOuterClass.Time.newBuilder().setTime(4500).build();
       
       GreetingServiceOuterClass.Response response = stub.withDeadlineAfter(deadlineMs, TimeUnit.MILLISECONDS).greeting(request);
 

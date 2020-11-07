@@ -41,7 +41,7 @@ private byte[] leer (String name, int pos, int cantData){
     return fileArray2;
 }
 
-private int escribir (String name, int cant, byte [] buf){
+private int escribir (String name,byte [] buf){
      try{
       File archivo = new File (name);
       archivo.createNewFile();
@@ -73,8 +73,8 @@ private int escribir (String name, int cant, byte [] buf){
   @Override
   public void write(GreetingServiceOuterClass.Escribir request,
         StreamObserver<GreetingServiceOuterClass.DevolverEscribir> responseObserver){
-          try{ 
-              int cantE = this.escribir(request.getName(),request.getCant(),request.getBuf().toByteArray());
+          try{               
+              int cantE = this.escribir(request.getName(),request.getBuf().toByteArray());
               GreetingServiceOuterClass.DevolverEscribir response = GreetingServiceOuterClass.DevolverEscribir.newBuilder().setCant(cantE).build();
               //Thread.sleep(10000);
               responseObserver.onNext(response);

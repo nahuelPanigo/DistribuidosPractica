@@ -27,8 +27,35 @@ public class Client
     return fileArray;
   }
 
+
+  private int cantIter(int total, int tam){
+    if ((tam % total) == 0) return tam/total;
+    return (tam/total) + 1;
+  }
+
+
+  private byte[] devolverBytes(int it, byte[] buf){
+     byte [] buf2;
+     int j=0;
+     int fin = buf.length;
+     int principio = it * 100000;
+     if ((principio + 100000) <= buf.length ){
+      buf2 = new byte [100000];
+      fin = principio + 100000;
+     }
+     else{   
+      buf2 = new byte [100000 - ((principio + 100000) - buf.length)];
+    }
+    for (int i= principio; i< fin; i++){
+        buf2[j]= buf[i];
+        j++;
+    }
+    return buf2;
+  }
+
     public static void main( String[] args ) throws Exception
     {
+      int cantBytes = 100000;
       Scanner teclado = new Scanner(System.in);
       final ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:8080")
         .usePlaintext(true)
@@ -36,28 +63,31 @@ public class Client
         
       GreetingServiceGrpc.GreetingServiceBlockingStub stub = GreetingServiceGrpc.newBlockingStub(channel);
       
-      System.out.println("ingrese nombre del archivo que desea leer o escribir");
+      System.out.println("ingrese el nombre del archivo que quiere crear/sobreescribir");
       String nombre = teclado. nextLine();
       
       System.out.println("Ingrese opcion 1 (escribir) opcion 2 (leer)");
       int op = teclado. nextInt();
       
       if ( op == 1) {
-        /*
-          String  texto= "la cantidad de caracteres del texto son 43\n";
-          byte[] bytes = texto.getBytes();
-                  */
-
-          System.out.println("ingrese nombre del archivo que desea leer o escribir");
+     
+          System.out.println("ingrese nombre del archivo de donde desea sacar la informacion");
           String archive = teclado. nextLine();
           archive = teclado. nextLine();
           Client c = new Client();
           byte [] bytes = c.leer(archive);
-          ByteString buf = ByteString.copyFrom(bytes);
           int cant = bytes.length;
-          GreetingServiceOuterClass.Escribir request = GreetingServiceOuterClass.Escribir.newBuilder().setName(nombre).setBuf(buf).setCant(cant).build();
-          GreetingServiceOuterClass.DevolverEscribir response = stub.write(request);
-          System.out.println("la cantidad de bytes que se escribio fue: "+ response.getCant());
+          int totalEscritos = 0;
+          int total = c.cantIter(cantBytes, cant);
+          for (int i=0; i<total; i++){
+              byte[] datos= c.devolverBytes(i, bytes);
+              ByteString buf = ByteString.copyFrom(datos);
+              GreetingServiceOuterClass.Escribir request = GreetingServiceOuterClass.Escribir.newBuilder().setName(nombre).setBuf(buf).setCant(cant).build();
+              GreetingServiceOuterClass.DevolverEscribir response = stub.write(request);
+              totalEscritos += response.getCant();
+          }
+          
+          System.out.println("la cantidad de bytes que se escribio fue: "+ totalEscritos);
       }else {    
           System.out.println("ingrese la posicion desde donde desea leer");
           int pos = teclado. nextInt();

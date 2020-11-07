@@ -30,8 +30,8 @@ public class Client
       final ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:8080")
         .usePlaintext(true)
         .build();
-      int deadlineMs = 40000;
-      int time = 40000;
+      int deadlineMs = 4000;
+      int time = 4000;
       
       GreetingServiceGrpc.GreetingServiceBlockingStub stub = GreetingServiceGrpc.newBlockingStub(channel);
       GreetingServiceOuterClass.Time request = GreetingServiceOuterClass.Time.newBuilder().setTime(time).build();

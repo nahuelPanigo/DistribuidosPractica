@@ -1,2 +1,0 @@
-hay 5
-la cantidad de caracteres del texto son 45
