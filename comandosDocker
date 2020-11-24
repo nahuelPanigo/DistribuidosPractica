@@ -19,4 +19,8 @@ mvn archetype:generate -DgroupId=pdytr.example.grpc -DartifactId=grpc-hello-serv
 mvn -DskipTests package exec:java -Dexec.mainClass=pdytr.example.grpc.App
 mvn -DskipTests exec:java -Dexec.mainClass=pdytr.example.grpc.Client
 
+javac -classpath lib/jade.jar -d classes myexamples/AgenteMovil.java
 
+java -cp lib/jade.jar:classes jade.Boot -gui
+
+java -cp lib/jade.jar:classes jade.Boot -gui -container -host localhost  -agents mol:AgenteMovil
