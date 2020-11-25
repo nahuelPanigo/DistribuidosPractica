@@ -8,7 +8,7 @@ import jade.lang.acl.ACLMessage;
 public class AgenteMovil extends Agent
 {
 static String[] vector = new String[6];
-	
+long startTime;
 
 public void initializeArray(){
 	for (int i=2; i<6; i++ ){
@@ -40,15 +40,16 @@ public void createAllContainer(){
 public void sendMessage(String content){
 	ACLMessage message = new ACLMessage(ACLMessage.INFORM); 
 	message.setContent(content); 
-	// message.addReceiver(new AID(vector[0], AID.ISLOCALNAME)); 
+	message.addReceiver(getAID());
+	//message.addReceiver(new AID(vector[0], AID.ISLOCALNAME)); 
 	send(message);
 }
 
 public void receiveAllMessages(){
-	ACLMessage msg = receive();
-	while (msg != null ) {
-		System.out.println(msg);
-		msg = receive();
+	for (int i=0; i<5; i++) {
+		ACLMessage msg = blockingReceive();
+		System.out.println(msg.getContent());
+
 	}
 }
 
@@ -56,14 +57,10 @@ public void setup()
 {
 	Location origen = here();
 	this.initializeArray();
-	System.out.println("\n\nHola, agente con nombre local " + getLocalName());
-	System.out.println("Y nombre completo... " + getName());
-	System.out.println("Y en location " + origen.getID() + "\n\n");
 	this.createAllContainer();
 try {
-	
 	ContainerID destino = new ContainerID(this.getDestino(origen.getID()), null);
-	System.out.println("Migrando el agente a " + destino.getID());
+	startTime = System.currentTimeMillis();
 	doMove(destino);
 	
 } catch (Exception e) {
@@ -82,6 +79,8 @@ protected ContainerController createContainer(String name) {
 	}
 
 
+ 
+
 protected void afterMove()
 {
 	OperatingSystemMXBean bean = (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
@@ -89,11 +88,12 @@ protected void afterMove()
 	Location origen = here();
 	if( origen.getID().equals(vector[0] + "@172.17.0.1")){
 		this.receiveAllMessages();
-		System.out.println("termino. el resultado es");
+		long endTime = System.currentTimeMillis() - startTime;
+		System.out.println("\n\n el tiempo total del recorrido es: " + endTime + "ms" );
 	}
 	else {
 		ContainerID destino = new ContainerID(this.getDestino(origen.getID()), null);
-		String s = bean.getFreePhysicalMemorySize()+ origen.getID();
+		String s = "\n la cantidad memoria total disponible es: " + bean.getFreePhysicalMemorySize()/1000000 + " MB"+" el nombre de la computadora es: "+ origen.getID() +" la carga de procesamiento es: "+ String.format("%.2f",bean.getSystemCpuLoad()*100) + "%"; 
 		this.sendMessage(s);
 		doMove(destino);
 	}
