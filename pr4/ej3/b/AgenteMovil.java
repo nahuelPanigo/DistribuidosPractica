@@ -9,19 +9,6 @@ public class AgenteMovil extends Agent
 {
 
 
-public void sendMessageLeer(String nombre, String pos, String cant){
-	ACLMessage message = new ACLMessage(ACLMessage.INFORM); 
-	message.setContent("leer"); 
-	message.addReceiver(getAID());
-	send(message);
-	message.setContent(nombre);
-	send(message);
-	message.setContent(pos);
-	send(message);
-	message.setContent(cant);
-	send(message);
-}
-
 public void sendMessage(String content){
 	ACLMessage message = new ACLMessage(ACLMessage.INFORM); 
 	message.setContent(content); 
@@ -30,13 +17,9 @@ public void sendMessage(String content){
 }
 
 
-public void sendMessageEscribir(String nombre, byte[] data){
+public void sendMessageByte(byte[] data){
 	ACLMessage message = new ACLMessage(ACLMessage.INFORM); 
-	message.setContent("escribir"); 
 	message.addReceiver(getAID());
-	send(message);
-	message.setContent(nombre); 
-	send(message);
 	message.setByteSequenceContent(data); 
 	send(message);
 }
@@ -44,36 +27,14 @@ public void sendMessageEscribir(String nombre, byte[] data){
 
 public String receiveMessage(){
 	ACLMessage msg = blockingReceive();
-	if(msg.getContent().equals("leer")){
-		int [] array=this.recibirLeer();
-		return "la cantidad de datos leidos fue "+ array[0]+ " la cantidad de datos solicitados era "+array[1];
-	}
-	if(msg.getContent().equals("escribir")){
-			return "la cantidad de bytes escritos fueron : "+ this.recibirEscribir();
-		}
 	return msg.getContent();
 }
 
 
-public int[] recibirLeer(){
+public byte[] recibirBytes(){
 	ACLMessage msg = blockingReceive();
-	String nombre=msg.getContent();
-	msg = blockingReceive();
-	int pos=Integer.parseInt(msg.getContent());
-	msg = blockingReceive();
-	int cant=Integer.parseInt(msg.getContent());
-	int [] array = new int [2];
-	array[0]=leer(nombre,pos,cant).length;
-	array[1]=cant;
-	return array;
-}
-
-public int recibirEscribir(){
-	ACLMessage msg = blockingReceive();
-	String nombre=msg.getContent();
-	msg = blockingReceive();
-	byte [] data=msg.getByteSequenceContent();
-	return this.escribir(nombre,data);
+	return msg.getByteSequenceContent();
+	
 }
 
 
@@ -135,19 +96,9 @@ public void setup()
 	Location origen = here();
 try {
 	Scanner teclado = new Scanner(System.in);
-	System.out.println("ingrese el nombre del archivo que quiere crear/sobreescribir");
+	System.out.println("ingrese el nombre del archivo que quiere realizar la copia");
     String nombre = teclado. nextLine();
-    System.out.println("Ingrese opcion 1 (escribir) opcion 2 (leer)");
-    int op = teclado. nextInt();
-	if (op == 1) {
-		System.out.println("ingrese nombre del archivo de donde desea sacar la informacion");
-    	String archive = teclado. nextLine();
-    	archive = teclado. nextLine();
-		sendMessageEscribir(nombre,this.leerCompleto(archive));
-	}
-	else {
-		sendMessageLeer(nombre, "1","250");
-	}
+	sendMessage(nombre);
 	ContainerID destino = new ContainerID("Main-Container", null);
 	doMove(destino);
 	
@@ -159,15 +110,20 @@ try {
 
 protected void afterMove()
 {
-	Location origen = here();
 	String s = this.receiveMessage();
+	Location origen = here();
 	if (origen.getID().equals("Main-Container@172.17.0.1")) {
-		this.sendMessage(s);
+		byte [] array = this.leerCompleto(s);
+		this.escribir(s+"CopiaServidor", array);
+		sendMessage(s);
+		this.sendMessageByte(array);
 		ContainerID destino = new ContainerID("Container-1", null);
 		doMove(destino);
 	}
 	else {
-		System.out.println(s);
+		this.escribir(s+"CopiaCliente",this.recibirBytes());
 	}
+	System.out.println("se realizo la copia correctamente");
 	}
+
 }
