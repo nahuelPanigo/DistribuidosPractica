@@ -8,7 +8,7 @@ public class App
     {
       
       // Create a new server to listen on port 8080
-      Server server = ServerBuilder.forPort(8080)
+      Server server = ServerBuilder.forPort(10000)
         .addService(new GreetingServiceImpl())
         .build();
       // Start the server

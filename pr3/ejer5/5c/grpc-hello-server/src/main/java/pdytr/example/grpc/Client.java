@@ -14,7 +14,7 @@ public class Client
     {
       // Channel is the abstraction to connect to a service endpoint
       // Let's use plaintext communication because we don't have certs
-      final ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:8080")
+      final ManagedChannel channel = ManagedChannelBuilder.forTarget("172.17.0.2:8080")
         .usePlaintext(true)
         .build();
 
@@ -26,7 +26,7 @@ public class Client
 
 
       GreetingServiceGrpc.GreetingServiceBlockingStub stub = GreetingServiceGrpc.newBlockingStub(channel);
-      GreetingServiceOuterClass.Time request = GreetingServiceOuterClass.Time.newBuilder().setTime(deadlineMs).build();
+      GreetingServiceOuterClass.Time request = GreetingServiceOuterClass.Time.newBuilder().setTime(40).build();
       // Finally, make the call using the stub   
       GreetingServiceOuterClass.Response response = stub.withDeadlineAfter(deadlineMs, TimeUnit.MILLISECONDS).greeting(request);
  

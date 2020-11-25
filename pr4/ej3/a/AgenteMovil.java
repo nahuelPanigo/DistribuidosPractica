@@ -1,18 +1,19 @@
 import jade.core.*;
 import jade.lang.acl.ACLMessage;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class AgenteMovil extends Agent
 {
 
 
-public void sendMessageLeer(String content, String pos, String cant){
+public void sendMessageLeer(String nombre, String pos, String cant){
 	ACLMessage message = new ACLMessage(ACLMessage.INFORM); 
-	message.setContent(content); 
+	message.setContent("leer"); 
 	message.addReceiver(getAID());
+	send(message);
+	message.setContent(nombre);
 	send(message);
 	message.setContent(pos);
 	send(message);
@@ -20,58 +21,116 @@ public void sendMessageLeer(String content, String pos, String cant){
 	send(message);
 }
 
-public void sendMessageEscribir(String content, String pos){
+public void sendMessage(String content){
 	ACLMessage message = new ACLMessage(ACLMessage.INFORM); 
 	message.setContent(content); 
 	message.addReceiver(getAID());
 	send(message);
 }
 
-public String recibirLeer(){
-	
+
+public void sendMessageEscribir(String nombre, byte[] data){
+	ACLMessage message = new ACLMessage(ACLMessage.INFORM); 
+	message.setContent("escribir"); 
+	message.addReceiver(getAID());
+	send(message);
+	message.setContent(nombre); 
+	send(message);
+	message.setByteSequenceContent(data); 
+	send(message);
 }
 
-public String recibirEscribir(){
-
-}
 
 public String receiveMessage(){
 	ACLMessage msg = blockingReceive();
 	if(msg.getContent().equals("leer")){
-		return this.recibirLeer();
+		int [] array=this.recibirLeer();
+		return "la cantidad de datos leidos fue "+ array[0]+ " la cantidad de datos solicitados era "+array[1];
 	}
-	return this.recibirEscribir();
+	if(msg.getContent().equals("escribir")){
+			return "la cantidad de bytes escritos fueron : "+ this.recibirEscribir();
+		}
+	return msg.getContent();
 }
 
-private int leer (String name){
-    BufferedReader reader;
-    int total=0;
-     File archivo = new File (name);
-		try {
-			if (archivo.isFile()){
-			reader = new BufferedReader(new FileReader(name));
-			String line = reader.readLine();
-			while (line != null) {
-				total = total + Integer.parseInt(line);
-				line = reader.readLine();
-			}
-			reader.close();
-		}
-		else {
-			return -1;
-		}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return total;
-	}
+
+public int[] recibirLeer(){
+	ACLMessage msg = blockingReceive();
+	String nombre=msg.getContent();
+	msg = blockingReceive();
+	int pos=Integer.parseInt(msg.getContent());
+	msg = blockingReceive();
+	int cant=Integer.parseInt(msg.getContent());
+	int [] array = new int [2];
+	array[0]=leer(nombre,pos,cant).length;
+	array[1]=cant;
+	return array;
+}
+
+public int recibirEscribir(){
+	ACLMessage msg = blockingReceive();
+	String nombre=msg.getContent();
+	msg = blockingReceive();
+	byte [] data=msg.getByteSequenceContent();
+	return this.escribir(nombre,data);
+}
+
+
+private int lastPos(int posA, int posB) {
+  if (posA < posB){
+    return posA;
+    }
+  return posB;
+
+}
+
+private int escribir (String name,byte [] buf){
+     try{
+      File archivo = new File (name);
+      archivo.createNewFile();
+      FileOutputStream fileOuputStream = new FileOutputStream(archivo,true);
+      fileOuputStream.write(buf);
+      fileOuputStream.close();
+    } catch (Exception e) {
+        System.out.println("no se pudo escribir el archivo");
+    }
+      return buf.length;
+}
+
+
+private byte[] leer (String name, int pos, int cantData){
+    File archivo = new File (name);
+    byte[] fileArray = new byte[(int) archivo.length()];
+    int last= this.lastPos(fileArray.length, pos + cantData);
+    int max = (last-pos > 0) ? last-pos : 0;
+    byte[] fileArray2 = new byte[max];
+    try{
+      if (archivo.isFile()){
+        FileInputStream fileInputStream = new FileInputStream(archivo);
+        fileInputStream.read(fileArray);
+        int j = 0;
+        for (int i = pos; i < last; i++) {
+          fileArray2[j] = fileArray[i];
+          j++;
+        }
+        fileInputStream.close();      
+      }
+      
+    }catch(Exception e){
+       System.out.println("no se pudo leer el archivo");
+    } 
+    return fileArray2;
+}
+
+
 
 public void setup()
 {
 	Location origen = here();
 try {
-	sendMessageLeer();
-	//sendMessageEscribir();
+	//sendMessageLeer("/home/nahuel/Desktop/dockerREADME","1","250");
+	String s= "holaaaa";
+	sendMessageEscribir("/home/nahuel/Desktop/dockerREADME",s.getBytes());
 	ContainerID destino = new ContainerID("Main-Container", null);
 	doMove(destino);
 	
@@ -85,15 +144,13 @@ protected void afterMove()
 {
 	Location origen = here();
 	String s = this.receiveMessage();
-	System.out.println(origen.getID());
 	if (origen.getID().equals("Main-Container@172.17.0.1")) {
-		sendMessage(Integer.toString(this.leer(s)));
+		this.sendMessage(s);
 		ContainerID destino = new ContainerID("Container-1", null);
 		doMove(destino);
-
 	}
 	else {
-		System.out.println("la suma de los valores es: " + s);
+		System.out.println(s);
 	}
 	}
 }

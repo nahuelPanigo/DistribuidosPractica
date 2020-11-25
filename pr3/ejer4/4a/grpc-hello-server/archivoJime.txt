@@ -1,0 +1,48 @@
+sudo docker exec --user root -it pdytr bash
+
+docker run -itd -v {rutaAcarpetaPractica}:/pdytr/ -p 5901:5901 -p 6901:6901 --name pdytr gmaron/pdytr
+
+add-apt-repository ppa:openjdk-r/ppa
+apt-get update
+apt-get install openjdk-8-jdk
+# Install mvn
+VERSION=3.6.3
+wget -O /tmp/maven.tar.gz https://apache.dattatec.com/maven/maven-3/3.6.3/binaries/apache-maven-$VERSION-bin.tar.gz
+tar -zxvf /tmp/maven.tar.gz -C /etc/
+mv /etc/apache-maven-$VERSION /etc/maven
+
+# Update linux PATH
+PATH=/etc/maven/bin:$PATH
+echo PATH=$PATH > /etc/environment
+echo PATH=$PATH >> /dockerstartup/generate_container_user
+
+mvn archetype:generate -DgroupId=pdytr.example.grpc -DartifactId=grpc-hello-server -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+mvn -DskipTests package exec:java -Dexec.mainClass=pdytr.example.grpc.App
+mvn -DskipTests exec:java -Dexec.mainClass=pdytr.example.grpc.Client
+
+
+sudo docker exec --user root -it pdytr bash
+
+docker run -itd -v {rutaAcarpetaPractica}:/pdytr/ -p 5901:5901 -p 6901:6901 --name pdytr gmaron/pdytr
+
+add-apt-repository ppa:openjdk-r/ppa
+apt-get update
+apt-get install openjdk-8-jdk
+# Install mvn
+VERSION=3.6.3
+wget -O /tmp/maven.tar.gz https://apache.dattatec.com/maven/maven-3/3.6.3/binaries/apache-maven-$VERSION-bin.tar.gz
+tar -zxvf /tmp/maven.tar.gz -C /etc/
+mv /etc/apache-maven-$VERSION /etc/maven
+
+# Update linux PATH
+PATH=/etc/maven/bin:$PATH
+echo PATH=$PATH > /etc/environment
+echo PATH=$PATH >> /dockerstartup/generate_container_user
+
+mvn archetype:generate -DgroupId=pdytr.example.grpc -DartifactId=grpc-hello-server -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+mvn -DskipTests package exec:java -Dexec.mainClass=pdytr.example.grpc.App
+mvn -DskipTests exec:java -Dexec.mainClass=pdytr.example.grpc.Client
+
+

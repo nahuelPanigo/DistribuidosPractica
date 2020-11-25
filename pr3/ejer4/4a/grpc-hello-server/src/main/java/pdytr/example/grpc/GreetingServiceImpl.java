@@ -74,6 +74,7 @@ private int escribir (String name,byte [] buf){
   public void write(GreetingServiceOuterClass.Escribir request,
         StreamObserver<GreetingServiceOuterClass.DevolverEscribir> responseObserver){
           try{               
+              System.out.println("se recibio un archivo de jime");x`
               int cantE = this.escribir(request.getName(),request.getBuf().toByteArray());
               GreetingServiceOuterClass.DevolverEscribir response = GreetingServiceOuterClass.DevolverEscribir.newBuilder().setCant(cantE).build();
               //Thread.sleep(10000);
