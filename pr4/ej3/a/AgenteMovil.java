@@ -130,7 +130,7 @@ public void setup()
 try {
 	//sendMessageLeer("/home/nahuel/Desktop/dockerREADME","1","250");
 	String s= "holaaaa";
-	sendMessageEscribir("/home/nahuel/Desktop/dockerREADME",s.getBytes());
+	sendMessageEscribir("/home/jimena/Documents/foto.png",s.getBytes());
 	ContainerID destino = new ContainerID("Main-Container", null);
 	doMove(destino);
 	

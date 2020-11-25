@@ -52,9 +52,9 @@ try {
 	//System.out.println(current);
 	Object[] args = getArguments();
 	String arg1 = (String)args[0];
-	System.out.println(arg1);
-	sendMessage("archivo.txt");
-	ContainerID destino = new ContainerID("Main-Container", null);
+	String arg2 = (String)args[1];
+	sendMessage(arg1);
+	ContainerID destino = new ContainerID(arg2, null);
 	doMove(destino);
 	
 } catch (Exception e) {
