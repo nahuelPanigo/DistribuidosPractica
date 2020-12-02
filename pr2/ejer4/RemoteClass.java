@@ -49,41 +49,7 @@ public int comunicacionConcurrente() throws RemoteException
 }
 
 
-public int lastPos(int posA, int posB) {
-	if (posA < posB){
-		return posA;
-		}
-	return posB;
 
-}
-
-
-
-public byte[] get(String archive, int pos, int cantData) throws RemoteException{
-	File archivo = new File (archive);
-	byte[] fileArray = new byte[(int) archivo.length()];
-	int last= this.lastPos(fileArray.length, pos + cantData);
-	int max = (last-pos > 0) ? last-pos : 0;
-	byte[] fileArray2 = new byte[(int) max];
-	try{
-			if (archivo.isFile()){
-				FileInputStream	fileInputStream = new FileInputStream(archivo);
-				fileInputStream.read(fileArray);
-				for (int i = pos; i < last; i++) {
-					fileArray2[i] = fileArray[i];
-				}
-				System.out.println(fileArray2.length);
-				fileInputStream.close();			
-			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-			return fileArray2;
-		}	
-	return fileArray2;
-
-
-}
 public int put(String  archive, byte[] data, int length) throws RemoteException{
 
 		try{
@@ -102,20 +68,5 @@ public int put(String  archive, byte[] data, int length) throws RemoteException{
 
 
 
-public int list(byte[] data) throws RemoteException{
-	return 1;
-}
 
-public void loopInfinito() throws RemoteException{
-boolean ok = true;
-try{
-	while (ok) {
-		
-	}
-
-}catch(Exception e){
-	e.printStackTrace();
-}
-
-}
 }

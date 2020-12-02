@@ -44,14 +44,16 @@ public byte[] get(String archive, int pos, int cantData) throws RemoteException{
 			if (archivo.isFile()){
 				FileInputStream	fileInputStream = new FileInputStream(archivo);
 				fileInputStream.read(fileArray);
+				int j =0;
 				for (int i = pos; i < last; i++) {
-					fileArray2[i] = fileArray[i];
+					fileArray2[j] = fileArray[i];
+					j++;
 				}
-				System.out.println(fileArray2.length);
 				fileInputStream.close();			
 			}
 			
 		}catch(Exception e){
+			System.out.println("se rompio");
 			e.printStackTrace();
 			return fileArray2;
 		}	
