@@ -20,10 +20,8 @@ System.exit(1);
 }
 try {
 String rname = "//" + args[0] + ":" + Registry.REGISTRY_PORT + "/remote";
-//System.out.println("hasta aca llega 0");
 IfaceRemoteClass remote = (IfaceRemoteClass) Naming.lookup(rname);
 int bufferlength = 100;
-//System.out.println("hasta aca llega 1");
 byte[] bytes = "holacomoes".getBytes();
 int cant = bytes.length;
 Scanner teclado = new Scanner(System.in);

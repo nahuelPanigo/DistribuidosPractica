@@ -19,12 +19,6 @@ protected RemoteClass() throws RemoteException
 {
 super();
 }
-/* Remote method implementation */
-public byte[] sendThisBack(byte[] data) throws RemoteException
-{
-System.out.println("Data back to client");
-return data;
-}
 
 public int lastPos(int posA, int posB) {
 	if (posA < posB){
@@ -75,21 +69,5 @@ public int put(String  archive, byte[] data, int length) throws RemoteException{
 }
 
 
-
-public int list(byte[] data) throws RemoteException{
-	return 1;
 }
 
-public void loopInfinito() throws RemoteException{
-boolean ok = true;
-try{
-	while (ok) {
-		
-	}
-
-}catch(Exception e){
-	e.printStackTrace();
-}
-
-}
-}

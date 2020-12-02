@@ -13,7 +13,6 @@ public class StartRemoteObject
 public static void main (String args[])
 {
 
-System.setProperty("java.rmi.server.hostname","172.17.0.2");
 try{
 /* Create ("start") the object which has the remote method */
 RemoteClass robject = new RemoteClass();

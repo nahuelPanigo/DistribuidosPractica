@@ -9,11 +9,7 @@ import java.rmi.RemoteException;
 /* This interface will need an implementing class */
 public interface IfaceRemoteClass extends Remote
 {
-/* It will be possible to invoke this method from an application in other JVM */
-public byte[] sendThisBack(byte[] data) throws RemoteException;
 public byte[] get(String archive, int pos, int bytesRead) throws RemoteException;
 public int put(String archive,byte[] data, int length) throws RemoteException;
-public int list(byte[] data) throws RemoteException;
-public void loopInfinito() throws RemoteException;
 }
 
