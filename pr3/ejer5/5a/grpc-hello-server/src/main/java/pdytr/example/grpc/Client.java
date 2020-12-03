@@ -12,7 +12,7 @@ public class Client
     public void setTimeInTxt(float timeCommSeg){
         try {
         File archivo = new File ("nuevo.txt");
-        archivo.createNewFile();
+        archivo.createNewFile();zzz
         String str = Float.toString(timeCommSeg);
         str+="\n";
         byte[] bytes = str.getBytes();

@@ -1,18 +1,15 @@
 /*
-* StartRemoteObject.java SERVIDOR
+* StartRemoteObject.java
 * Starts the remote object. More specifically:
 * 1) Creates the object which has the remote methods to be invoked
 * 2) Registers the object so that it becomes avaliable
 */
 import java.rmi.registry.Registry; /* REGISTRY_PORT */
 import java.rmi.Naming; /* rebind */
-
-
 public class StartRemoteObject
 {
 public static void main (String args[])
 {
-System.setProperty("java.rmi.server.hostname","172.17.0.2");
 try{
 /* Create ("start") the object which has the remote method */
 RemoteClass robject = new RemoteClass();

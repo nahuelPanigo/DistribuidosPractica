@@ -49,11 +49,11 @@ int opcion = teclado. nextInt();
 
 if (opcion == 1) {
 	System.out.println("ingrese nombre del archivo de donde desea sacar la informacion");
-    String archive = teclado. nextLine();
-    archive = teclado. nextLine();
-    AskRemote a = new AskRemote();
-    byte [] bytes = a.leer(archive);
-    int cant = bytes.length;
+  String archive = teclado. nextLine();
+  archive = teclado. nextLine();
+  AskRemote a = new AskRemote();
+  byte [] bytes = a.leer(archive);
+  int cant = bytes.length;
 	int n = remote.put(nombre, bytes, cant);
 	System.out.println("La cantidad de caracteres que se escribio fue " + n);
 }
